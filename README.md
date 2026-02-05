@@ -2,7 +2,16 @@
 
 A full-stack AI-powered web application that detects whether a text is AI-generated or human-written and can also humanize AI-generated content.
 
+## Application Preview
 
+### Home Page
+![Home](screenshots/homepage.png)
+
+### AI Detection Result
+![Detection](screenshots/detection.png)
+
+### Humanization Feature
+![Humanize](screenshots/humanize.png)
 
 ## Features
 
