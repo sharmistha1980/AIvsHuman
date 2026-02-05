@@ -1,109 +1,166 @@
-# AI vs Human - Hybrid Text Detection System
+# AI vs Human – Hybrid Text Generation Detection System
 
-A full-stack AI-powered web application that detects whether a text is AI-generated or human-written and can also humanize AI-generated content.
-
-## Application Preview
-
-### Home Page
-![Home](screenshots/homepage.png)
-
-### AI Detection Result
-![Detection](screenshots/detection.png)
-
-### Humanization Feature
-![Humanize](screenshots/humanize.png)
-
-## Features
-
-- AI-generated text detection using RoBERTa
-- Rule-based linguistic pattern analysis
-- Text humanization using T5-based paraphraser
-- Full-stack architecture (Flask + Next.js)
+A full-stack machine learning application that detects whether input text is AI-generated or human-written using a hybrid architecture combining transformer-based classification and rule-based linguistic heuristics. The system also includes a text humanization module powered by a T5 paraphrasing model.
 
 ---
 
-## Tech Stack
+## Overview
+
+This project implements a hybrid AI detection pipeline:
+
+1. Transformer-based probability scoring (RoBERTa OpenAI Detector)
+2. Rule-based AI linguistic pattern analysis
+3. Threshold-based ensemble decision logic
+4. T5-based paraphrasing for humanization
+
+The system exposes REST endpoints via Flask and integrates with a Next.js frontend for interactive testing.
+
+---
+
+##  Detection Architecture
+
+### Model Layer
+- `openai-community/roberta-base-openai-detector`
+- Outputs raw probability scores
+- Evaluates semantic AI likelihood
+
+### Rule-Based Layer
+Custom linguistic pattern scanner detects common AI writing markers:
+- Structured discourse markers
+- Predictable rhetorical patterns
+- Repetitive semantic structure
+
+Each detected pattern adds a weighted suspicion score.
+
+### Final Classification
+Final score = Model Probability + Pattern Boost
+
+Decision threshold:
+```
+THRESHOLD = 0.10
+```
+
+This hybrid approach reduces false negatives that pure model-based systems may miss.
+
+---
+
+##  Humanization Module
+
+- Model: `humarin/chatgpt_paraphraser_on_T5_base`
+- Beam search enabled
+- Repetition penalty applied
+- Controlled temperature sampling
+
+Used to rewrite AI-like text into more natural human-style output.
+
+---
+
+##  System Architecture
+
+```
+Frontend (Next.js + React)
+        ↓
+REST API (Flask)
+        ↓
+Transformers Pipeline
+        ↓
+Hybrid Scoring Engine
+```
+
+---
+
+##  Tech Stack
 
 ### Backend
-- Python
+- Python 3.x
 - Flask
 - HuggingFace Transformers
 - PyTorch
 
 ### Frontend
-- Next.js
+- Next.js 16
 - React 19
+- Node.js >= 20.9
 
+### DevOps
+- Docker (container-ready)
+- Git version control
 
+---
 
-## Project Structure
+##  Application Preview
+
+### Home Interface
+![Home](screenshots/homepage.png)
+
+### AI Detection Result
+![Detection](screenshots/Detection_AI.png)
+![Detection](screenshots/Detection_human.png)
+
+### Humanization Output
+![Humanize](screenshots/humanize.png)
+
+---
+
+##  Local Setup
+
+### 1️.Clone Repository
 
 ```
-backend/
-  app.py
-  requirements.txt
+git clone https://github.com/sharmistha1980/AIvsHuman.git
+cd AIvsHuman
+```
 
-frontend/
-  package.json
-  next.config.js
-
-
-
-
-## Installation
-
-### 1.Clone the repository
-
-
-git clone https://github.com/sharmistha1980/ai-vs-human.git
-cd ai-vs-human
-
-
-
+---
 
 ### 2️.Backend Setup
 
-
-cd backend
+```
 pip install -r requirements.txt
 python app.py
+```
 
+Runs at:
+```
+http://localhost:5000
+```
 
-Runs on: http://localhost:5000
-
-
+---
 
 ### 3️.Frontend Setup
 
-cd frontend
+```
 npm install
 npm run dev
+```
 
-Runs on: http://localhost:3000
+Runs at:
+```
+http://localhost:3000
+```
 
+---
 
+## Key Engineering Considerations
 
-## Detection Logic
+- Model inference optimized via HuggingFace pipeline
+- Threshold-based binary classification
+- Modular architecture for future model upgrades
 
-The system combines:
+---
 
-1. Transformer-based AI probability scoring
-2. Rule-based AI phrase detection
-3. Threshold-based classification
+## Potential Improvements
 
-This hybrid approach improves robustness against false negatives.
+- Model quantization for faster inference
+- Confidence interval visualization
+- API rate limiting
+- Deployment on cloud (Render / Railway / AWS)
+- CI/CD integration
 
+---
 
+## 👩‍💻 Author
 
-## Future Improvements
-
-- Deploy using Docker
-- Add user authentication
-- Improve scoring visualization
-- Add API rate limiting
-
-
-
-## Author
-
-Sharmistha Chatterjee
+Sharmistha Chatterjee  
+Computer Science Engineering  
+AI/ML Enthusiast
